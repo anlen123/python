@@ -6,13 +6,12 @@ def download_img(url,name):
     urlretrieve(url,'./%s.jpg'%name)
 
 #保存进文件txt
-
-def gettxt(filename, contents):
+def download_txt(filename, contents):
     fh = open(filename, 'w', encoding='utf-8')
     fh.write(contents)
     fh.close()
 #保存图片
-def request_download(name,url):
+def get_img(url,name):
     path = './%s.jpg'%name
     r = requests.get(url)
     with open(path, 'wb') as f:
@@ -24,7 +23,7 @@ def download_music(url,name):
     request.urlretrieve(url, path)
     print('下载完成')
 #下载显示进度条
-def down_jindu(url,name):
+def download_jindu(url,name):
     response = requests.get(url,stream = True)
     zong_size = int(response.headers['content-length'])
     print('文件大小为：%0.2f MB'% (zong_size/1024/1024))
@@ -42,7 +41,7 @@ def down_jindu(url,name):
     else :
         print('未响应！！！！')
 def get_page(url):
-    reponse = requests.get(url)
+    reponse = requests.get(url,headers = dailichi())
     reponse.encoding="UTF-8"
     text = reponse.text
     print(text)
@@ -145,3 +144,25 @@ def IDM_MAIN():
     from subprocess import call
     IDM = r'C:\Program Files (x86)\Internet Download Manager\IDMan.exe'
     call([IDM, '/s'])
+def panduan_ip(ip): # panduan_ip(["115.221.245.229","9999"])
+    url = "http://httpbin.org/get"
+    headers = {
+        'User-Agent': "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+        }
+    proxies = {
+        'http':str(ip[0])+":"+str(ip[1]),
+        'https':str(ip[0])+":"+str(ip[1]),
+    }
+    try:
+        response = requests.request("GET", url, headers=headers, proxies=proxies, timeout=5)
+        if response.status_code==200:
+            panduan = response.json()['origin'].split(",")[0]
+            if panduan!=None:
+                return True
+            else :
+                return False
+        else:
+            return False
+    except:
+        return False
+

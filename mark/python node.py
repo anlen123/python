@@ -6,37 +6,6 @@
 # import requests
 # import parsel
 # import re
-#
-# #下载快的
-# def download_img(url,name):
-#     from  urllib.request import urlretrieve
-#     urlretrieve(url,'./%s.jpg'%name)
-#
-# #保存进文件txt
-#
-# def gettxt(filename, contents):
-#     fh = open(filename, 'w', encoding='utf-8')
-#     fh.write(contents)
-#     fh.close()
-# #保存图片
-# def request_download(name,url):
-#     path = './%s.jpg'%name
-#     r = requests.get(url)
-#     with open(path, 'wb') as f:
-#         f.write(r.content)
-# #下载音乐和视频
-# def download_music(url,name):
-#     from urllib import request
-#     path = './%s.mp3'%name
-#     request.urlretrieve(url, path)
-#     print('下载完成')
-# #得到页面
-# def get_page(url):
-#     reponse = requests.get(url)
-#     reponse.encoding="UTF-8"
-#     text = reponse.text
-#     print(text)
-#
 # #谷歌无界浏览器
 # from selenium.webdriver.chrome.options import Options
 # chrome_options=Options()
