@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "console": "externalTerminal",
+            "console": "internalConsole",
             // "none"	只输出到    "调试控制台"
             // "integratedTerminal"	同时输出到"调试控制台"和软件内置“终端”
             // "externalTerminal"	输出到外部“终端”

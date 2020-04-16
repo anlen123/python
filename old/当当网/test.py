@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- encoding: utf-8 -*-
 '''
-@File    :   test.py
+@File    :   文件批量重命名.py
 @Time    :   2019/12/16 22:07:48
 @Author  :   刘华强
 @Contact :   1761512493@qq.com
