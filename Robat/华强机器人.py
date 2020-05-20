@@ -6,6 +6,7 @@
 @Author  :   刘华强
 @Contact :   1761512493@qq.com
 '''
-import wellcome as we
+from Robat import wellcome as we
+
 we.icon()
 we.hello("刘华强大帅B","小刘机器人.")
