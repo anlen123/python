@@ -7,36 +7,17 @@ B站粉丝监控，消息发送
 @Author  :   未闻丶死讯
 @Contact :   1761512493@qq.com
 '''
-
-    
 import requests
-import ssl
-from requests.auth import HTTPBasicAuth
 import json
 import math
 from datetime import datetime
 import time
-from urllib import parse
-import time
+import re
 import datetime
-def get_cook():
-    file  = open('cook.txt')
-    cook = file.read()
-    file.close()
-    return cook
-def get_csrd_token():
-    file  = open('csrd_token.txt')
-    csrd_token = file.read()
-    file.close()
-    return csrd_token
-def get_id():
-    file  = open('自己的id.txt')
-    自己的id = file.read()
-    file.close()
-    return 自己的id
-csrf_token=get_csrd_token()
-cook = get_cook()
-自己的id = get_id()
+cook = "sid=iltqdyjb; DedeUserID=32482364; DedeUserID__ckMd5=ce93b510ef5be598; SESSDATA=8a59ae8e%2C1604628849%2Cddb89*51; bili_jct=3fda1881cb2b6d0fae6908d3cb614ad0; CURRENT_FNVAL=16; rpdid=|(u|kJJYJ~lY0J'ul)m|~YmJ|; LIVE_BUVID=AUTO8615892797682858"
+aid = re.findall("DedeUserID=(.*?);", cook)[0]
+csrf_token = re.findall("bili_jct=(.*?);", cook)[0]
+print(aid,csrf_token)
 msg_template = "小伙伴 {uname} 你好啊[亲亲]，感谢关注我哦~\n\n你是第 {index} 位关注我的人呢，[害羞]对我的视频感兴趣的话，就多多三连分享吧！我会努力做出更多优质视频的！\n\n[斜眼笑]还可以加我们的QQ群:68724983 哦，里面有很多有趣灵魂的人，还有技术人员可以讨论哲学！！！"
 
 # time.sleep(10000)
@@ -53,7 +34,7 @@ headers = {
     'Connection' : 'keep-alive',
     'Cookie' : "%s"%cook,
     'Host' : 'api.bilibili.com',
-    'Referer' : "https://space.bilibili.com/%s/fans/fans"%自己的id,
+    'Referer' : "https://space.bilibili.com/%s/fans/fans"%aid,
     'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0'
 }
 msg_headers = {
@@ -71,7 +52,7 @@ msg_headers = {
 }
 max_monitor_cnt = 100
 fan_list = {}
-url = "https://api.bilibili.com/x/relation/followers?vmid=%s&pn={page}&ps=20&order=desc&jsonp=jsonp"%自己的id
+url = "https://api.bilibili.com/x/relation/followers?vmid=%s&pn={page}&ps=20&order=desc&jsonp=jsonp"%aid
 msg_url = "https://api.vc.bilibili.com/web_im/v1/web_im/send_msg"
 sendmsg_data = "msg%5Bsender_uid%5D={sender_uid}&msg%5Breceiver_id%5D={receiver_id}&msg%5Breceiver_type%5D=1&msg%5Bmsg_type%5D=1&msg%5Bmsg_status%5D=0&msg%5Bcontent%5D=%7B%22content%22%3A%22{content_url_code}%22%7D&msg%5Btimestamp%5D={timestamp}&msg%5Bdev_id%5D=EE0629D2-2B90-4AB0-8D71-0DBA92F62A34&build=0&mobi_app=web&csrf_token=47ed4f492876c08586fdb63906d08563"
 
@@ -79,7 +60,7 @@ sendmsg_data = "msg%5Bsender_uid%5D={sender_uid}&msg%5Breceiver_id%5D={receiver_
 #     # !debug
 #     # if targetUid != 501053733:
 #     #     return False
-#     postdata = sendmsg_data.replace("{sender_uid}",str(自己的id))
+#     postdata = sendmsg_data.replace("{sender_uid}",str(aid))
 #     postdata = postdata.replace("{receiver_id}",str(targetUid))
 #     t = time.time()
 #     postdata = postdata.replace("{timestamp}",str(int(t)))
@@ -116,7 +97,7 @@ def 私信(对方的id,信息):
     }
     url = 'https://api.vc.bilibili.com/web_im/v1/web_im/send_msg'
     dataa = {
-            'msg[sender_uid]': f'{自己的id}',
+            'msg[sender_uid]': f'{aid}',
             'msg[receiver_id]': f"{对方的id}",
             'msg[receiver_type]': '1',
             'msg[msg_type]': '1',
